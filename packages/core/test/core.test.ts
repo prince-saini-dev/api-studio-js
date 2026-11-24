@@ -129,6 +129,21 @@ describe('uploads', () => {
     expect(upload.calls).toHaveLength(2);
   });
 
+  it('retries an oversized error once smaller, then drops it instead of looping', async () => {
+    const upload = fakeUpload([413, 413, 413, 413]);
+    const { client } = makeClient({}, { fetch: upload.fetch });
+    for (let i = 0; i < 30; i++) client.addBreadcrumb({ category: 'log', message: String(i), data: { i } });
+    client.captureException(new Error('huge'), { extra: { blob: 'x' } });
+    await client.flush(true);
+    expect(upload.calls).toHaveLength(2);
+    const retried = upload.calls[1]!.body.events[0];
+    expect(retried.extra).toBeUndefined();
+    expect(retried.breadcrumbs).toHaveLength(10);
+    expect(retried.breadcrumbs.every((b: { data?: unknown }) => b.data === undefined)).toBe(true);
+    await client.flush(true);
+    expect(upload.calls).toHaveLength(2);
+  });
+
   it('restores a queue saved by an earlier launch before new items', async () => {
     const saved: ApiLog = { method: 'GET', url: 'https://api.test/old', status_code: 200, duration_ms: 1, status: 'success', timestamp: new Date().toISOString() };
     const storage = memoryStorage({ 'apistudio.logs': JSON.stringify([saved]) });

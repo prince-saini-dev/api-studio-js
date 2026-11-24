@@ -308,10 +308,13 @@ function shrinkLog(log: ApiLog): ApiLog | null {
   };
 }
 
+/** One smaller retry for a 413: last 10 breadcrumbs without data, no extra. Null once already shrunk. */
 function shrinkError(event: ErrorEvent): ErrorEvent | null {
-  if (!event.breadcrumbs?.length && !event.extra) return null;
+  const crumbs = event.breadcrumbs ?? [];
+  const alreadySmall = !event.extra && crumbs.length <= 10 && crumbs.every((crumb) => crumb.data === undefined);
+  if (alreadySmall) return null;
   const { extra: _extra, ...rest } = event;
-  return { ...rest, breadcrumbs: event.breadcrumbs?.slice(-10).map(({ data: _data, ...crumb }) => crumb) };
+  return { ...rest, breadcrumbs: crumbs.slice(-10).map(({ data: _data, ...crumb }) => crumb) };
 }
 
 export function describeError(error: unknown): { type: string; message?: string; stack?: string } {
