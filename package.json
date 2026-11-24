@@ -1,0 +1,23 @@
+{
+  "name": "api-studio-js",
+  "private": true,
+  "description": "API Studio SDKs for JavaScript: React Native, browser, and Node.",
+  "workspaces": [
+    "packages/core",
+    "packages/react-native",
+    "packages/browser",
+    "packages/node"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm test"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.6",
+    "tsup": "8.3.5",
+    "typescript": "5.6.3",
+    "vitest": "2.1.8"
+  }
+}

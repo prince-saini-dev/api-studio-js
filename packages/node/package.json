@@ -1,0 +1,15 @@
+{
+  "name": "@apistudio/node",
+  "version": "0.1.0",
+  "description": "API Studio for Node.js: outgoing API logs (fetch, axios, http/https) and crash reporting.",
+  "license": "MIT",
+  "homepage": "https://apistudio.cloud",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "src"],
+  "engines": { "node": ">=18" },
+  "scripts": { "build": "tsup" },
+  "dependencies": { "@apistudio/core": "0.1.0" },
+  "keywords": ["node", "express", "axios", "api", "logging", "crash", "monitoring"]
+}

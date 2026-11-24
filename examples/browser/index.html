@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>API Studio browser SDK playground</title>
+  </head>
+  <body style="font: 14px system-ui; padding: 24px">
+    <h1>@apistudio/browser playground</h1>
+    <button id="fetch">fetch OK</button>
+    <button id="fail">fetch 500</button>
+    <button id="xhr">XHR (like axios)</button>
+    <button id="crash">Throw uncaught error</button>
+    <button id="route">pushState /checkout</button>
+    <pre id="out"></pre>
+    <!-- Without a bundler, tell the browser where @apistudio/core lives. -->
+    <script type="importmap">{ "imports": { "@apistudio/core": "/packages/core/dist/index.mjs" } }</script>
+    <script type="module">
+      import { ApiStudio } from '/packages/browser/dist/index.mjs';
+
+      ApiStudio.init({
+        apiKey: 'demo-key',
+        baseUrl: location.origin + '/ingest',
+        app: { name: 'Playground', version: '1.0.0', build: '1' },
+        flushIntervalMs: 1000,
+      });
+      ApiStudio.setUser({ id: 'tester-1' });
+      const out = document.getElementById('out');
+      const show = (t) => (out.textContent += t + '\n');
+
+      document.getElementById('fetch').onclick = async () => {
+        const r = await fetch('/demo-api/items?token=secret&page=2', { method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer abc' }, body: JSON.stringify({ sku: 'A1', password: 'p' }) });
+        show('fetch ' + r.status + ' ' + JSON.stringify(await r.json()));
+      };
+      document.getElementById('fail').onclick = async () => show('fetch ' + (await fetch('/demo-api/fail')).status);
+      document.getElementById('xhr').onclick = () => {
+        const x = new XMLHttpRequest();
+        x.open('PUT', '/demo-api/profile');
+        x.setRequestHeader('content-type', 'application/json');
+        x.onload = () => show('xhr ' + x.status);
+        x.send(JSON.stringify({ name: 'A' }));
+      };
+      document.getElementById('route').onclick = () => history.pushState({}, '', '/checkout');
+      document.getElementById('crash').onclick = () => {
+        setTimeout(function checkoutTotal() {
+          const order = undefined;
+          return order.total;
+        });
+      };
+    </script>
+  </body>
+</html>

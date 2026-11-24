@@ -1,0 +1,15 @@
+{
+  "name": "@apistudio/react-native",
+  "version": "0.1.0",
+  "description": "API Studio for React Native: API logs, crashes, and breadcrumbs. Works with Expo, no native code.",
+  "license": "MIT",
+  "homepage": "https://apistudio.cloud",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "src"],
+  "scripts": { "build": "tsup" },
+  "dependencies": { "@apistudio/core": "0.1.0" },
+  "peerDependencies": { "react-native": ">=0.70" },
+  "keywords": ["react-native", "expo", "api", "logging", "network", "crash", "monitoring"]
+}

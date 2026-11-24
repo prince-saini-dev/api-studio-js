@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "paths": { "@apistudio/core": ["./packages/core/src/index.ts"] }
+  },
+  "include": ["packages/*/src", "packages/*/test", "packages/*/types"]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@apistudio/browser",
+  "version": "0.1.0",
+  "description": "API Studio for web apps: fetch/XHR logs, crashes, and breadcrumbs.",
+  "license": "MIT",
+  "homepage": "https://apistudio.cloud",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "src"],
+  "sideEffects": false,
+  "scripts": { "build": "tsup" },
+  "dependencies": { "@apistudio/core": "0.1.0" },
+  "keywords": ["browser", "react", "vue", "angular", "api", "logging", "network", "crash", "monitoring"]
+}

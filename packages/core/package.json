@@ -1,0 +1,20 @@
+{
+  "name": "@apistudio/core",
+  "version": "0.1.0",
+  "description": "Shared core of the API Studio JavaScript SDKs (queue, redaction, uploads, fetch/XHR capture).",
+  "license": "MIT",
+  "homepage": "https://apistudio.cloud",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "src"],
+  "sideEffects": false,
+  "scripts": { "build": "tsup" }
+}
