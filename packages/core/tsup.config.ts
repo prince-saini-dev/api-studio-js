@@ -7,5 +7,5 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   target: 'es2019',
-  external: ['@apistudio/core', 'react-native'],
+  external: ['@api-studio-core/core', 'react-native'],
 });

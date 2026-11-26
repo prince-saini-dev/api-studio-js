@@ -1,4 +1,4 @@
-# @apistudio/react-native
+# @api-studio-core/react-native
 
 API logs, crash reporting, and breadcrumbs for React Native and Expo, sent to
 [API Studio](https://apistudio.cloud). Pure JavaScript: no native code and no
@@ -7,7 +7,7 @@ pod install, and it works in Expo Go.
 ## Install
 
 ```bash
-npm install @apistudio/react-native @react-native-async-storage/async-storage
+npm install @api-studio-core/react-native @react-native-async-storage/async-storage
 ```
 
 AsyncStorage is optional but recommended. With it, logs queued while offline,
@@ -19,7 +19,7 @@ Initialise once, as early as possible, for example at the top of `index.js` or `
 
 ```ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ApiStudio } from '@apistudio/react-native';
+import { ApiStudio } from '@api-studio-core/react-native';
 
 ApiStudio.init({
   apiKey: 'YOUR_API_KEY', // Portal → Project → API Keys
@@ -43,7 +43,7 @@ ApiStudio.setUser(null); // on sign-out
 
 ```tsx
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
-import { trackNavigation } from '@apistudio/react-native';
+import { trackNavigation } from '@api-studio-core/react-native';
 
 const navigationRef = useNavigationContainerRef();
 <NavigationContainer ref={navigationRef} onStateChange={trackNavigation(navigationRef)}>

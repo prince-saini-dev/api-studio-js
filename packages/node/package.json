@@ -1,5 +1,5 @@
 {
-  "name": "@apistudio/node",
+  "name": "@api-studio-core/node",
   "version": "0.1.0",
   "description": "API Studio for Node.js: outgoing API logs (fetch, axios, http/https) and crash reporting.",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "build": "tsup"
   },
   "dependencies": {
-    "@apistudio/core": "0.1.0"
+    "@api-studio-core/core": "0.1.0"
   },
   "keywords": [
     "node",

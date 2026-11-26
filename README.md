@@ -7,10 +7,10 @@ in the same portal: Logs, Issues, Alerts, testers, sessions, and releases.
 
 | Package | For | Captures |
 |---|---|---|
-| [`@apistudio/react-native`](packages/react-native) | React Native and Expo | fetch, axios, and XHR; JS crashes; unhandled promise rejections; React Navigation screens |
-| [`@apistudio/browser`](packages/browser) | Web apps (React, Vue, Angular, Svelte, plain JS) | fetch, axios, and XHR; uncaught errors; unhandled rejections; route changes |
-| [`@apistudio/node`](packages/node) | Node.js 18+ backends and scripts | global fetch; axios, got, and anything else on `http`/`https`; uncaught exceptions; Express errors |
-| [`@apistudio/core`](packages/core) | Building your own integration | Queue, redaction, uploads, fetch/XHR capture |
+| [`@api-studio-core/react-native`](packages/react-native) | React Native and Expo | fetch, axios, and XHR; JS crashes; unhandled promise rejections; React Navigation screens |
+| [`@api-studio-core/browser`](packages/browser) | Web apps (React, Vue, Angular, Svelte, plain JS) | fetch, axios, and XHR; uncaught errors; unhandled rejections; route changes |
+| [`@api-studio-core/node`](packages/node) | Node.js 18+ backends and scripts | global fetch; axios, got, and anything else on `http`/`https`; uncaught exceptions; Express errors |
+| [`@api-studio-core/core`](packages/core) | Building your own integration | Queue, redaction, uploads, fetch/XHR capture |
 
 Every SDK:
 
@@ -35,7 +35,7 @@ validates them with its own schemas (see `api-studio-backend/docs/sdk-protocol.m
 
 ## Publishing
 
-Versions are kept in step across packages. Publish `@apistudio/core` first:
+Versions are kept in step across packages. Publish `@api-studio-core/core` first:
 
 ```bash
 npm run check && npm run build

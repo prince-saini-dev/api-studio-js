@@ -15,7 +15,7 @@ import {
   type ErrorEvent,
   type KeyValueStorage,
   type PlatformAdapter,
-} from '@apistudio/core';
+} from '@api-studio-core/core';
 
 const BASE = 'https://ingest.test';
 

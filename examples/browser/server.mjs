@@ -1,4 +1,4 @@
-// Local playground for @apistudio/browser: serves the demo page and a mock
+// Local playground for @api-studio-core/browser: serves the demo page and a mock
 // ingest API that records what the SDK uploads (GET /received to read it).
 import { readFileSync } from 'node:fs';
 import { createServer } from 'node:http';

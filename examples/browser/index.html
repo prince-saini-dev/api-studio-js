@@ -5,15 +5,15 @@
     <title>API Studio browser SDK playground</title>
   </head>
   <body style="font: 14px system-ui; padding: 24px">
-    <h1>@apistudio/browser playground</h1>
+    <h1>@api-studio-core/browser playground</h1>
     <button id="fetch">fetch OK</button>
     <button id="fail">fetch 500</button>
     <button id="xhr">XHR (like axios)</button>
     <button id="crash">Throw uncaught error</button>
     <button id="route">pushState /checkout</button>
     <pre id="out"></pre>
-    <!-- Without a bundler, tell the browser where @apistudio/core lives. -->
-    <script type="importmap">{ "imports": { "@apistudio/core": "/packages/core/dist/index.mjs" } }</script>
+    <!-- Without a bundler, tell the browser where @api-studio-core/core lives. -->
+    <script type="importmap">{ "imports": { "@api-studio-core/core": "/packages/core/dist/index.mjs" } }</script>
     <script type="module">
       import { ApiStudio } from '/packages/browser/dist/index.mjs';
 

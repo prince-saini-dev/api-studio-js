@@ -1,5 +1,5 @@
 {
-  "name": "@apistudio/core",
+  "name": "@api-studio-core/core",
   "version": "0.1.0",
   "description": "Shared core of the API Studio JavaScript SDKs (queue, redaction, uploads, fetch/XHR capture).",
   "license": "MIT",

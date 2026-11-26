@@ -1,5 +1,5 @@
 {
-  "name": "@apistudio/browser",
+  "name": "@api-studio-core/browser",
   "version": "0.1.0",
   "description": "API Studio for web apps: fetch/XHR logs, crashes, and breadcrumbs.",
   "license": "MIT",
@@ -16,7 +16,7 @@
     "build": "tsup"
   },
   "dependencies": {
-    "@apistudio/core": "0.1.0"
+    "@api-studio-core/core": "0.1.0"
   },
   "keywords": [
     "browser",

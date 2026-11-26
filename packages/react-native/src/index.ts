@@ -6,9 +6,9 @@ import {
   type ApiStudioOptions,
   type DeviceInfo,
   type PlatformAdapter,
-} from '@apistudio/core';
+} from '@api-studio-core/core';
 
-export * from '@apistudio/core';
+export * from '@api-studio-core/core';
 
 export const SDK_VERSION = '0.1.0';
 

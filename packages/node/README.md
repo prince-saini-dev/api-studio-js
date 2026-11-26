@@ -1,14 +1,14 @@
-# @apistudio/node
+# @api-studio-core/node
 
 Outgoing API logs and crash reporting for Node.js 18+, sent to
 [API Studio](https://apistudio.cloud).
 
 ```bash
-npm install @apistudio/node
+npm install @api-studio-core/node
 ```
 
 ```ts
-import { ApiStudio, apiStudioErrorHandler } from '@apistudio/node';
+import { ApiStudio, apiStudioErrorHandler } from '@api-studio-core/node';
 
 ApiStudio.init({ apiKey: process.env.API_STUDIO_KEY!, app: { name: 'orders-api', version: '1.8.0' } });
 

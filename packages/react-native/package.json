@@ -1,5 +1,5 @@
 {
-  "name": "@apistudio/react-native",
+  "name": "@api-studio-core/react-native",
   "version": "0.1.0",
   "description": "API Studio for React Native: API logs, crashes, and breadcrumbs. Works with Expo, no native code.",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "build": "tsup"
   },
   "dependencies": {
-    "@apistudio/core": "0.1.0"
+    "@api-studio-core/core": "0.1.0"
   },
   "peerDependencies": {
     "react-native": ">=0.70"
