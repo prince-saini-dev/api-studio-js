@@ -7,9 +7,34 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "sideEffects": false,
-  "scripts": { "build": "tsup" },
-  "dependencies": { "@apistudio/core": "0.1.0" },
-  "keywords": ["browser", "react", "vue", "angular", "api", "logging", "network", "crash", "monitoring"]
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@apistudio/core": "0.1.0"
+  },
+  "keywords": [
+    "browser",
+    "react",
+    "vue",
+    "angular",
+    "api",
+    "logging",
+    "network",
+    "crash",
+    "monitoring"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prince-saini-dev/api-studio-js.git",
+    "directory": "packages/browser"
+  },
+  "bugs": {
+    "url": "https://github.com/prince-saini-dev/api-studio-js/issues"
+  }
 }

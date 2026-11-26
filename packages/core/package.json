@@ -14,7 +14,20 @@
       "require": "./dist/index.js"
     }
   },
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "sideEffects": false,
-  "scripts": { "build": "tsup" }
+  "scripts": {
+    "build": "tsup"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prince-saini-dev/api-studio-js.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/prince-saini-dev/api-studio-js/issues"
+  }
 }

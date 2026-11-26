@@ -7,9 +7,34 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "files": ["dist", "src"],
-  "scripts": { "build": "tsup" },
-  "dependencies": { "@apistudio/core": "0.1.0" },
-  "peerDependencies": { "react-native": ">=0.70" },
-  "keywords": ["react-native", "expo", "api", "logging", "network", "crash", "monitoring"]
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@apistudio/core": "0.1.0"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.70"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "api",
+    "logging",
+    "network",
+    "crash",
+    "monitoring"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prince-saini-dev/api-studio-js.git",
+    "directory": "packages/react-native"
+  },
+  "bugs": {
+    "url": "https://github.com/prince-saini-dev/api-studio-js/issues"
+  }
 }

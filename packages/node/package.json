@@ -7,9 +7,34 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "files": ["dist", "src"],
-  "engines": { "node": ">=18" },
-  "scripts": { "build": "tsup" },
-  "dependencies": { "@apistudio/core": "0.1.0" },
-  "keywords": ["node", "express", "axios", "api", "logging", "crash", "monitoring"]
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@apistudio/core": "0.1.0"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "axios",
+    "api",
+    "logging",
+    "crash",
+    "monitoring"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prince-saini-dev/api-studio-js.git",
+    "directory": "packages/node"
+  },
+  "bugs": {
+    "url": "https://github.com/prince-saini-dev/api-studio-js/issues"
+  }
 }
