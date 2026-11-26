@@ -37,7 +37,11 @@ export class Uploader<T> {
     this.batchSize = options.batchSize;
   }
 
-  /** Sends everything queued. Resolves when the queue is empty or a retry is pending. */
+  /**
+   * Sends what is queued when the flush starts. Items queued meanwhile wait
+   * for the next flush, so a busy app never turns one flush into a stream of
+   * tiny requests. Resolves when done or when a retry is pending.
+   */
   flush(force = false): Promise<void> {
     if (!force && Date.now() < this.retryAt) return Promise.resolve();
     this.sending ??= this.sendAll().finally(() => {
@@ -49,8 +53,9 @@ export class Uploader<T> {
   private async sendAll(): Promise<void> {
     const { queue } = this.options;
     await queue.load();
-    while (queue.size > 0) {
-      const batch = queue.peek(this.batchSize);
+    let left = queue.size;
+    while (left > 0 && queue.size > 0) {
+      const batch = queue.peek(Math.min(this.batchSize, left));
       let outcome: Outcome;
       try {
         outcome = classify(await this.post(batch));
@@ -62,6 +67,7 @@ export class Uploader<T> {
         case 'dropped':
           if (outcome === 'dropped') this.options.log(`Dropped ${batch.length} rejected item(s).`);
           queue.drop(batch.length);
+          left -= batch.length;
           this.failures = 0;
           this.retryAt = 0;
           this.batchSize = this.options.batchSize;
@@ -77,6 +83,7 @@ export class Uploader<T> {
               this.options.log('Retrying an oversized item without bodies.');
             } else {
               queue.drop(1);
+              left -= 1;
             }
           }
           break;

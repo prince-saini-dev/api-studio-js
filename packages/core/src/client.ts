@@ -22,6 +22,10 @@ const MAX_STACK_CHARS = 60_000;
 const MAX_MESSAGE_CHARS = 4_000;
 const LOG_BATCH = 50;
 const ERROR_BATCH = 20;
+/** Default wait for logs to be sent together. */
+const DEFAULT_FLUSH_INTERVAL_MS = 10_000;
+/** Shorter wait once a failed call is queued: what tends to come right before a crash. */
+const FAILURE_FLUSH_MS = 2_000;
 const INSTALL_ID_KEY = 'apistudio.install_id';
 
 /** One finished HTTP request, as an instrumentation saw it. */
@@ -53,6 +57,7 @@ export class ApiStudioClient {
   private readonly logUploader: Uploader<ApiLog>;
   private readonly errorUploader: Uploader<ErrorEvent>;
   private timer?: ReturnType<typeof setInterval>;
+  private failureTimer?: ReturnType<typeof setTimeout>;
   private uninstall?: () => void;
 
   constructor(
@@ -63,7 +68,7 @@ export class ApiStudioClient {
     this.options = {
       baseUrl: DEFAULT_BASE_URL,
       maxBodyChars: 64 * 1024,
-      flushIntervalMs: 5000,
+      flushIntervalMs: DEFAULT_FLUSH_INTERVAL_MS,
       maxQueueSize: 500,
       ...options,
     };
@@ -119,6 +124,8 @@ export class ApiStudioClient {
   close(): Promise<void> {
     if (this.timer) clearInterval(this.timer);
     this.timer = undefined;
+    if (this.failureTimer) clearTimeout(this.failureTimer);
+    this.failureTimer = undefined;
     this.uninstall?.();
     this.uninstall = undefined;
     return this.flush(true);
@@ -194,10 +201,32 @@ export class ApiStudioClient {
       };
       this.addHttpBreadcrumb(log);
       if (this.options.beforeSendLog) log = this.options.beforeSendLog(log);
-      if (log) this.logQueue.push(log);
+      if (log) {
+        this.logQueue.push(log);
+        this.onLogQueued(log);
+      }
     } catch (error) {
       this.debug('Could not record a request', error);
     }
+  }
+
+  /**
+   * Logs normally wait for the next interval tick and go together. A full
+   * batch goes at once, and a failed call pulls the next send in to 2 s.
+   */
+  private onLogQueued(log: ApiLog): void {
+    if (!this.timer) return; // not started (or closed): nothing sends
+    if (this.logQueue.size >= LOG_BATCH) {
+      void this.logUploader.flush().catch((error) => this.debug('Flush failed', error));
+      return;
+    }
+    if (log.status === 'success' || this.failureTimer) return;
+    const delay = Math.min(FAILURE_FLUSH_MS, this.options.flushIntervalMs);
+    this.failureTimer = setTimeout(() => {
+      this.failureTimer = undefined;
+      void this.flush();
+    }, delay);
+    (this.failureTimer as unknown as { unref?: () => void }).unref?.();
   }
 
   /** Captures a body string the caller already read, e.g. from a manual integration. */
@@ -255,7 +284,13 @@ export class ApiStudioClient {
         ...this.context(),
       };
       if (this.options.beforeSendError) event = this.options.beforeSendError(event);
-      if (event) this.errorQueue.push(event);
+      if (event) {
+        this.errorQueue.push(event);
+        // Send the error now, with the API calls that led to it, rather than
+        // risk the app closing before the next tick. If it does close, both
+        // queues are persisted and go on the next launch.
+        if (this.timer) void this.flush();
+      }
     } catch (failure) {
       this.debug('Could not capture an error', failure);
     }

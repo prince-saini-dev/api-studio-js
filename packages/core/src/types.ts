@@ -130,7 +130,11 @@ export interface ApiStudioOptions {
   ignoreUrls?: Array<string | RegExp>;
   /** Body characters kept per request/response. Default 65536. */
   maxBodyChars?: number;
-  /** How often queued items are sent. Default 5000 ms. */
+  /**
+   * How long logs wait to be sent together. Default 10000 ms. A full batch
+   * (50 logs) goes at once, a failed call shortens the wait to 2 s, and
+   * errors are sent immediately with the logs that led to them.
+   */
   flushIntervalMs?: number;
   /** Items kept per queue while offline; the oldest are dropped. Default 500. */
   maxQueueSize?: number;

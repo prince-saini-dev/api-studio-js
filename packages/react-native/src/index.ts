@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { AppState, Platform } from 'react-native';
 import {
   createApiStudio,
   instrumentXhr,
@@ -95,6 +95,24 @@ function installErrorHandlers(client: ApiStudioClient, timeoutMs: number): () =>
   return () => undo.forEach((fn) => fn());
 }
 
+/**
+ * Saves and sends everything queued when the app leaves the foreground: the
+ * OS may kill a background app at any time, and logs otherwise wait for the
+ * next flush interval.
+ */
+function flushInBackground(client: ApiStudioClient): () => void {
+  try {
+    const subscription = AppState?.addEventListener?.('change', (state) => {
+      if (state === 'background' || state === 'inactive') {
+        void client.persist().then(() => client.flush(true));
+      }
+    });
+    return () => subscription?.remove();
+  } catch {
+    return () => {};
+  }
+}
+
 function adapter(options: ReactNativeOptions): PlatformAdapter {
   return {
     sdk: { name: 'api_studio.react_native', version: SDK_VERSION, platform: 'react-native' },
@@ -105,6 +123,7 @@ function adapter(options: ReactNativeOptions): PlatformAdapter {
       const undo: Array<() => void> = [];
       if (options.captureNetwork !== false) undo.push(instrumentXhr(client));
       if (options.captureErrors !== false) undo.push(installErrorHandlers(client, options.fatalFlushTimeoutMs ?? 1500));
+      undo.push(flushInBackground(client));
       return () => undo.forEach((fn) => fn());
     },
   };
